@@ -1,7 +1,12 @@
+import { signOut, useSession } from 'next-auth/react';
 import Head from 'next/head';
-import Image from 'next/image';
+import { useRouter } from 'next/router';
 
 export default function Home() {
+  const router = useRouter();
+  const { data: session } = useSession();
+  console.log('In the Home page with session: ', session);
+
   return (
     <div>
       <Head>
@@ -10,6 +15,20 @@ export default function Home() {
         <link rel='icon' href='/favicon.ico' />
       </Head>
       <div>Hello World</div>
+      <div>
+        {session ? (
+          <button className='bg-blue-400 py-2 px-4' onClick={() => signOut()}>
+            Logout
+          </button>
+        ) : (
+          <button
+            className='bg-blue-400 py-2 px-4'
+            onClick={() => router.push('/api/auth/signin')}
+          >
+            SignIn
+          </button>
+        )}
+      </div>
     </div>
   );
 }

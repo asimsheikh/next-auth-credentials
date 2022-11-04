@@ -15,7 +15,7 @@ export default NextAuth({
       },
       authorize: (credentials) => {
         if (
-          credentials?.username === 'john' &&
+          credentials?.username === 'asim@sheikh.com' &&
           credentials?.password === 'test'
         ) {
           return {
@@ -31,13 +31,18 @@ export default NextAuth({
   callbacks: {
     jwt: async ({ token, user }) => {
       if (user) {
+        console.log('There is a user', user);
         token.id = user.id;
       }
       return token;
     },
     session: ({ session, token }) => {
       if (token) {
+        console.log('Callback token is', token);
         session.id = token.id;
+        session.user.image = 'http://www.avatar.com/asim';
+
+        console.log('Callback session is', session);
       }
       return session;
     }
