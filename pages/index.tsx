@@ -15,6 +15,11 @@ export default function Home() {
         <link rel='icon' href='/favicon.ico' />
       </Head>
       <div>Hello World</div>
+      {session ? (
+        <div>Welcome to our site again {session.username}</div>
+      ) : (
+        <></>
+      )}
       <div>
         {session ? (
           <button className='bg-blue-400 py-2 px-4' onClick={() => signOut()}>

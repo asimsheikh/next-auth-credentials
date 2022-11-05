@@ -1,8 +1,8 @@
 # npm resolution error report
 
-2022-11-04T00:50:31.060Z
+2022-11-05T02:58:34.260Z
 
-While resolving: auth-credentials@0.1.0
+While resolving: next-auth@4.15.0
 Found: next@13.0.1
 node_modules/next
   next@"13.0.1" from the root project
@@ -10,7 +10,13 @@ node_modules/next
 Could not resolve dependency:
 peer next@"^12.2.5" from next-auth@4.15.0
 node_modules/next-auth
-  next-auth@"*" from the root project
+  next-auth@"^4.15.0" from the root project
+
+Conflicting peer dependency: next@12.3.2
+node_modules/next
+  peer next@"^12.2.5" from next-auth@4.15.0
+  node_modules/next-auth
+    next-auth@"^4.15.0" from the root project
 
 Fix the upstream dependency conflict, or retry
 this command with --force, or --legacy-peer-deps
@@ -20,14 +26,66 @@ Raw JSON explanation object:
 
 {
   "code": "ERESOLVE",
+  "edge": {
+    "type": "peer",
+    "name": "next",
+    "spec": "^12.2.5",
+    "error": "INVALID",
+    "from": {
+      "name": "next-auth",
+      "version": "4.15.0",
+      "location": "node_modules/next-auth",
+      "isWorkspace": false,
+      "dependents": [
+        {
+          "type": "prod",
+          "name": "next-auth",
+          "spec": "^4.15.0",
+          "from": {
+            "location": "C:\\Users\\Asim Sheikh\\projects\\nextjs\\auth-credentials"
+          }
+        }
+      ]
+    }
+  },
+  "dep": {
+    "name": "next",
+    "version": "12.3.2",
+    "whileInstalling": {
+      "name": "next-auth",
+      "version": "4.15.0",
+      "path": "C:\\Users\\Asim Sheikh\\projects\\nextjs\\auth-credentials\\node_modules\\next-auth"
+    },
+    "location": "node_modules/next",
+    "isWorkspace": false,
+    "dependents": [
+      {
+        "type": "peer",
+        "name": "next",
+        "spec": "^12.2.5",
+        "error": "INVALID",
+        "from": {
+          "name": "next-auth",
+          "version": "4.15.0",
+          "location": "node_modules/next-auth",
+          "isWorkspace": false,
+          "dependents": [
+            {
+              "type": "prod",
+              "name": "next-auth",
+              "spec": "^4.15.0",
+              "from": {
+                "location": "C:\\Users\\Asim Sheikh\\projects\\nextjs\\auth-credentials"
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
   "current": {
     "name": "next",
     "version": "13.0.1",
-    "whileInstalling": {
-      "name": "auth-credentials",
-      "version": "0.1.0",
-      "path": "C:\\Users\\Asim Sheikh\\projects\\nextjs\\auth-credentials"
-    },
     "location": "node_modules/next",
     "isWorkspace": false,
     "dependents": [
@@ -41,41 +99,60 @@ Raw JSON explanation object:
       }
     ]
   },
-  "currentEdge": {
-    "type": "prod",
-    "name": "next",
-    "spec": "13.0.1",
-    "from": {
-      "location": "C:\\Users\\Asim Sheikh\\projects\\nextjs\\auth-credentials"
-    }
-  },
-  "edge": {
-    "type": "peer",
-    "name": "next",
-    "spec": "^12.2.5",
-    "error": "INVALID",
-    "from": {
-      "name": "next-auth",
-      "version": "4.15.0",
-      "whileInstalling": {
-        "name": "auth-credentials",
-        "version": "0.1.0",
-        "path": "C:\\Users\\Asim Sheikh\\projects\\nextjs\\auth-credentials"
-      },
-      "location": "node_modules/next-auth",
+  "peerConflict": {
+    "current": {
+      "name": "next",
+      "version": "13.0.1",
+      "location": "node_modules/next",
       "isWorkspace": false,
       "dependents": [
         {
           "type": "prod",
-          "name": "next-auth",
-          "spec": "*",
+          "name": "next",
+          "spec": "13.0.1",
           "from": {
             "location": "C:\\Users\\Asim Sheikh\\projects\\nextjs\\auth-credentials"
+          }
+        }
+      ]
+    },
+    "peer": {
+      "name": "next",
+      "version": "12.3.2",
+      "whileInstalling": {
+        "name": "next-auth",
+        "version": "4.15.0",
+        "path": "C:\\Users\\Asim Sheikh\\projects\\nextjs\\auth-credentials\\node_modules\\next-auth"
+      },
+      "location": "node_modules/next",
+      "isWorkspace": false,
+      "dependents": [
+        {
+          "type": "peer",
+          "name": "next",
+          "spec": "^12.2.5",
+          "error": "INVALID",
+          "from": {
+            "name": "next-auth",
+            "version": "4.15.0",
+            "location": "node_modules/next-auth",
+            "isWorkspace": false,
+            "dependents": [
+              {
+                "type": "prod",
+                "name": "next-auth",
+                "spec": "^4.15.0",
+                "from": {
+                  "location": "C:\\Users\\Asim Sheikh\\projects\\nextjs\\auth-credentials"
+                }
+              }
+            ]
           }
         }
       ]
     }
   },
   "strictPeerDeps": false,
-  "force": false
+  "force": false,
+  "isMine": true
 }

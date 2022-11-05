@@ -1,6 +1,16 @@
 import NextAuth from 'next-auth';
 import CredentialProvider from 'next-auth/providers/credentials';
 
+import { connect } from '@planetscale/database';
+
+const config = {
+  host: process.env.HOST,
+  username: process.env.USERNAME_DB,
+  password: process.env.PASSWORD
+};
+
+const conn = connect(config);
+
 export default NextAuth({
   providers: [
     CredentialProvider({
@@ -13,16 +23,16 @@ export default NextAuth({
         },
         password: { label: 'Password', type: 'password' }
       },
-      authorize: (credentials) => {
+      authorize: async (credentials) => {
+        const result = await conn.execute(
+          'select * from users where username=?',
+          [credentials?.username]
+        );
         if (
-          credentials?.username === 'asim@sheikh.com' &&
-          credentials?.password === 'test'
+          result.rows !== [] &&
+          result.rows[0].password == credentials?.password
         ) {
-          return {
-            id: '2',
-            name: 'Asim',
-            email: 'asim.sardar.sheikh@gmail.com'
-          };
+          return { id: 1, username: credentials?.username };
         }
         return null;
       }
@@ -31,16 +41,17 @@ export default NextAuth({
   callbacks: {
     jwt: async ({ token, user }) => {
       if (user) {
-        console.log('There is a user', user);
+        // console.log('There is a user', user);
         token.id = user.id;
+        token.username = user.username;
       }
       return token;
     },
     session: ({ session, token }) => {
       if (token) {
-        console.log('Callback token is', token);
+        // console.log('Callback token is', token);
         session.id = token.id;
-        session.user.image = 'http://www.avatar.com/asim';
+        session.username = token.username;
 
         console.log('Callback session is', session);
       }
