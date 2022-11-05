@@ -29,7 +29,7 @@ export default NextAuth({
           [credentials?.username]
         );
         if (
-          result.rows !== [] &&
+          result.rows.length > 0 &&
           result.rows[0].password == credentials?.password
         ) {
           return { id: 1, username: credentials?.username };
