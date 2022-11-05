@@ -16,11 +16,7 @@ const checkNotExistingUser = async (username: string): Promise<boolean> => {
   const results = await conn.execute('select * from users where username=?', [
     username
   ]);
-  if (results.rows.length === 0) {
-    return true;
-  } else {
-    return false;
-  }
+  return results.rows.length === 0 ? true : false;
 };
 
 export default async function handler(
