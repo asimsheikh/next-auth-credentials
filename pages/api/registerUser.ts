@@ -1,7 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 
-// type Data = { name: string }
-
 import { connect } from '@planetscale/database';
 
 const config = {
@@ -21,7 +19,7 @@ const checkNotExistingUser = async (username: string): Promise<boolean> => {
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<any>
+  res: NextApiResponse<{ ok: boolean }>
 ) {
   console.log(process.env.USER);
   if (req.body.action === 'REGISTER_USER') {
