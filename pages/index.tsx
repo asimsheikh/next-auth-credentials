@@ -1,4 +1,4 @@
-import { signOut, useSession } from 'next-auth/react';
+import { signOut, signIn, useSession } from 'next-auth/react';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 
@@ -28,7 +28,7 @@ export default function Home() {
         ) : (
           <button
             className='bg-blue-400 py-2 px-4'
-            onClick={() => router.push('/api/auth/signin')}
+            onClick={() => signIn('credentials')}
           >
             SignIn
           </button>
