@@ -7,11 +7,7 @@ const Dashboard = () => {
   useEffect(() => {
     const securePage = async () => {
       const session = await getSession();
-      if (!session) {
-        signIn();
-      } else {
-        setLoading(false);
-      }
+      !session ? signIn() : setLoading(false);
     };
     securePage();
   }, []);
