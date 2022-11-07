@@ -2,6 +2,7 @@ import NextAuth from 'next-auth';
 import CredentialProvider from 'next-auth/providers/credentials';
 
 import { connect } from '@planetscale/database';
+import { resourceLimits } from 'worker_threads';
 
 const config = {
   host: process.env.HOST,
@@ -32,7 +33,7 @@ export default NextAuth({
           result.rows.length > 0 &&
           result.rows[0].password == credentials?.password
         ) {
-          return { id: 1, username: credentials?.username };
+          return { id: result.rows[0].id, username: credentials?.username };
         }
         return null;
       }
