@@ -44,6 +44,15 @@ export class Repo {
 
   async registerUser(user: User) {
     const { username, password } = user;
+
+    const checkUser = await this.conn.execute(
+      'select * from users where username=?',
+      [username]
+    );
+
+    if (checkUser.rows.length === 0) {
+      return { ok: false, usersId: 0 };
+    }
     let result = await this.conn.execute(
       'insert into users (username, password) values(?,?)',
       [username, password]
