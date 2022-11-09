@@ -12,7 +12,7 @@ type Post = {
   users_id: number;
 };
 
-type User = {
+export type User = {
   username: string;
   password: string;
 };
@@ -23,7 +23,7 @@ const config = {
   password: process.env.PASSWORD
 };
 
-class Repo {
+export class Repo {
   conn: Connection;
   constructor(connect: Connection, config: Config) {
     this.conn = connect(config);
