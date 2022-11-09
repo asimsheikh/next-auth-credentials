@@ -49,8 +49,9 @@ export class Repo {
       'select * from users where username=?',
       [username]
     );
+    console.log(checkUser);
 
-    if (checkUser.rows.length === 0) {
+    if (checkUser.rows.length > 0) {
       return { ok: false, usersId: 0 };
     }
     let result = await this.conn.execute(

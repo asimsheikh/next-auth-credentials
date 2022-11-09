@@ -26,6 +26,7 @@ export default function Register() {
         onSubmit={async (e) => {
           e.preventDefault();
           const resp = await send(username, password);
+          console.log('resp is', resp);
           if (resp.ok === true) {
             setError(false);
             router.push('/api/auth/signin');
