@@ -2,7 +2,6 @@ import NextAuth from 'next-auth';
 import CredentialProvider from 'next-auth/providers/credentials';
 
 import { connect } from '@planetscale/database';
-import { resourceLimits } from 'worker_threads';
 
 const config = {
   host: process.env.HOST,
