@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import { useState } from 'react';
 
 const send = async (username: string, password: string) => {
-  const req = await fetch('/api/registerUser', {
+  const req = await fetch('/api/usecases', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({

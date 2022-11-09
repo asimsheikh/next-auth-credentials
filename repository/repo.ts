@@ -1,9 +1,9 @@
 import { connect, Connection } from '@planetscale/database';
 
 type Config = {
-  username: string;
-  host: string;
-  password: string;
+  username?: string;
+  host?: string;
+  password?: string;
 };
 
 type Post = {
@@ -17,7 +17,7 @@ export type User = {
   password: string;
 };
 
-const config = {
+const config: Config = {
   host: process.env.HOST,
   username: process.env.USERNAME_DB,
   password: process.env.PASSWORD
@@ -25,7 +25,7 @@ const config = {
 
 export class Repo {
   conn: Connection;
-  constructor(connect: Connection, config: Config) {
+  constructor(connect: any, config: Config) {
     this.conn = connect(config);
   }
 
@@ -59,3 +59,5 @@ export class Repo {
     return results.rows;
   }
 }
+
+export const repo = new Repo(connect, config);
