@@ -10,7 +10,7 @@ export default async function handler(
   const result = await registerUser(repo, { username, password });
 
   if (result.ok === false) {
-    res.status(200).json({ ok: false, usersId: null });
+    res.status(200).json({ ok: false, usersId: 0 });
   } else {
     res.status(200).json({ ok: true, usersId: result.usersId });
   }
