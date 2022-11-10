@@ -4,8 +4,21 @@ content-type: application/json
 {
     "action": "REGISTER_USER", 
     "payload": {
-        "username": "asimsheikh@hello.com",
+        "username": "asimsheikh2@hello.com",
         "password": "asim"
     }
 }
 
+### 
+
+POST http://localhost:3000/api/usecases HTTP/1.1
+content-type: application/json
+
+{
+    "action": "ADD_BLOG_POST", 
+    "payload": {
+        "date": "2022-10-10",
+        "blog": "The first blog", 
+        "username": "asimsheikh2@hello.com"
+    }
+}
