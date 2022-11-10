@@ -31,6 +31,6 @@ content-type: application/json
 {
     "action": "GET_BLOG_POSTS", 
     "payload": {
-        "username": "asimsheikh2@hello.com"
+        "username": "asimsheikh@hello.com"
     }
 }

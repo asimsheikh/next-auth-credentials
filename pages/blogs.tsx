@@ -1,5 +1,13 @@
 import { getSession } from 'next-auth/react';
 import { useState } from 'react';
+import fetcher from '../utils/utils';
+
+const addBlogPostAction = (date: string, blog: string, username: string) => {
+  return {
+    action: 'ADD_BLOG_POST',
+    payload: { date: date, blog: blog, username: username }
+  };
+};
 
 export async function getServerSideProps(context) {
   const session = await getSession({ req: context.req });
@@ -36,6 +44,10 @@ const Blogs = ({ blogPosts, session }) => {
         onSubmit={(e) => {
           e.preventDefault();
           console.log(blog, selectedDate);
+          fetcher(
+            '/api/usecases',
+            addBlogPostAction(selectedDate, blog, session.username)
+          );
           setSelectedDate('');
           setBlog('');
         }}
