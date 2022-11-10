@@ -9,7 +9,6 @@ type Config = {
 type Post = {
   date: string;
   blog: string;
-  users_id: number;
 };
 
 export type User = {
@@ -25,15 +24,15 @@ const config: Config = {
 
 export class Repo {
   conn: Connection;
-  constructor(connect: any, config: Config) {
+  constructor(connect: Connection, config: Config) {
     this.conn = connect(config);
   }
 
-  async addPost(post: Post) {
-    const { date, blog, users_id } = post;
+  async addPost(post: Post, username: string) {
+    const { date, blog } = post;
     let result = await this.conn.execute(
-      'insert into microblog (date, blog, users_id) values(?,?,?)',
-      [date, blog, users_id]
+      'insert into microblog (date, blog, users_id) values(?,?, (select id from users where username=?))',
+      [date, blog, username]
     );
     if (result.insertId !== '') {
       return { ok: true, insertId: result.insertId };
@@ -44,27 +43,25 @@ export class Repo {
 
   async registerUser(user: User) {
     const { username, password } = user;
-
-    const checkUser = await this.conn.execute(
-      'select * from users where username=?',
-      [username]
-    );
-    console.log(checkUser);
-
-    if (checkUser.rows.length > 0) {
-      return { ok: false, usersId: 0 };
-    }
     let result = await this.conn.execute(
       'insert into users (username, password) values(?,?)',
       [username, password]
     );
-    return { ok: true, usersId: result.insertId };
+    return { ok: true, usersId: Number(result.insertId) };
   }
 
-  async getPosts(usersId: number) {
+  async findUserId(username: string) {
+    let result = await this.conn.execute(
+      'select id from users where username=?',
+      [username]
+    );
+    return result.rows[0].id;
+  }
+
+  async getPosts(username: string) {
     const results = await this.conn.execute(
-      'select * from microblog where users_id=?',
-      [usersId]
+      'select * from microblog where users_id in ( select id from users where username=?)',
+      [username]
     );
     return results.rows;
   }
