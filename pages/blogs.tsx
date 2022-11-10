@@ -25,22 +25,36 @@ export async function getServerSideProps(context) {
 }
 
 const Blogs = ({ blogPosts, session }) => {
-  const [blogTitle, setBlogTitle] = useState('');
+  const [selectedDate, setSelectedDate] = useState('');
+  const [blog, setBlog] = useState('');
 
   return (
     <div>
       <h1 className='text-xl font-bold'>Blogs</h1>
       <p>Welcome back {session.username}</p>
-      <form>
-        <label htmlFor='blogTitle'>Blog Title</label>
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          console.log(blog, selectedDate);
+          setSelectedDate('');
+          setBlog('');
+        }}
+        className='flex flex-col w-1/2'
+      >
         <input
-          className='border-2 ml-2 my-2'
-          type='text'
-          name='blogTitle'
-          id='blogTitle'
-          value={blogTitle}
-          onChange={(e) => setBlogTitle(e.target.value)}
+          type='date'
+          value={selectedDate}
+          onChange={(e) => setSelectedDate(e.target.value)}
         />
+        <input
+          value={blog}
+          className='border-gray-200 border-2 p-2'
+          onChange={(e) => setBlog(e.target.value)}
+        />
+        <button className=' text-gray-600 bg-green-300 border-2 border-green-300 p-2 mt-2'>
+          {' '}
+          Add Blog{' '}
+        </button>
       </form>
       <ul>
         {blogPosts.map((post) => (
