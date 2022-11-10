@@ -1,11 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { User, Repo, repo } from '../../../repository/repo';
-
-const registerUser = async (repo: Repo, params: User) => {
-  const { username, password } = params;
-  let result = await repo.registerUser({ username, password });
-  return result;
-};
+import { registerUser } from './registerUser';
 
 export default async function handler(
   req: NextApiRequest,

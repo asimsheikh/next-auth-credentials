@@ -1,20 +1,20 @@
 import { connect, Connection } from '@planetscale/database';
 
-type Config = {
+interface Config {
   username?: string;
   host?: string;
   password?: string;
-};
+}
 
-type Post = {
+interface Post {
   date: string;
   blog: string;
-};
+}
 
-export type User = {
+export interface User {
   username: string;
   password: string;
-};
+}
 
 const config: Config = {
   host: process.env.HOST,
@@ -43,6 +43,17 @@ export class Repo {
 
   async registerUser(user: User) {
     const { username, password } = user;
+
+    const checkUser = await this.conn.execute(
+      'select * from users where username=?',
+      [username]
+    );
+    console.log(checkUser);
+
+    if (checkUser.rows.length > 0) {
+      return { ok: false, usersId: 0 };
+    }
+
     let result = await this.conn.execute(
       'insert into users (username, password) values(?,?)',
       [username, password]
