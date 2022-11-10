@@ -6,7 +6,7 @@ import { registerUser } from './registerUser';
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<{ ok: boolean; usersId?: number }>
+  res: NextApiResponse
 ) {
   if (req.body.action === 'REGISTER_USER') {
     const { username, password } = req.body.payload;
