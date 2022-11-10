@@ -22,3 +22,15 @@ content-type: application/json
         "username": "asimsheikh2@hello.com"
     }
 }
+
+### 
+
+POST http://localhost:3000/api/usecases HTTP/1.1
+content-type: application/json
+
+{
+    "action": "GET_BLOG_POSTS", 
+    "payload": {
+        "username": "asimsheikh2@hello.com"
+    }
+}
