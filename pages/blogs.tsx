@@ -9,6 +9,13 @@ const addBlogPostAction = (date: string, blog: string, username: string) => {
   };
 };
 
+const getBlogPostsAction = (username: string) => {
+  return {
+    action: 'GET_BLOG_POSTS',
+    payload: { username: username }
+  };
+};
+
 export async function getServerSideProps(context) {
   const session = await getSession({ req: context.req });
 
@@ -21,13 +28,15 @@ export async function getServerSideProps(context) {
     };
   }
 
+  const blogPosts = await fetcher(
+    'http://localhost:3000/api/usecases',
+    getBlogPostsAction(session.username)
+  );
+
   return {
     props: {
       session,
-      blogPosts: [
-        { id: 1, title: 'Welcome to the house' },
-        { id: 2, title: 'Make it home people' }
-      ]
+      blogPosts: blogPosts.result
     }
   };
 }
@@ -71,7 +80,8 @@ const Blogs = ({ blogPosts, session }) => {
       <ul>
         {blogPosts.map((post) => (
           <div key={post.id}>
-            {post.id} - {post.title}
+            <div>{post.date}</div>
+            <div>{post.blog}</div>
           </div>
         ))}
       </ul>
