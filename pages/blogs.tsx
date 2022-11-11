@@ -1,4 +1,5 @@
 import { getSession } from 'next-auth/react';
+import { useRouter } from 'next/router';
 import { useState } from 'react';
 import fetcher from '../utils/utils';
 
@@ -44,42 +45,47 @@ export async function getServerSideProps(context) {
 const Blogs = ({ blogPosts, session }) => {
   const [selectedDate, setSelectedDate] = useState('');
   const [blog, setBlog] = useState('');
+  const router = useRouter();
 
   return (
     <div>
-      <h1 className='text-xl font-bold'>Blogs</h1>
-      <p>Welcome back {session.username}</p>
+      <h1 className='text-4xl font-bold m-2'>Blogs</h1>
+      <p className='m-2'>Welcome back {session.username}</p>
       <form
-        onSubmit={(e) => {
+        onSubmit={async (e) => {
           e.preventDefault();
           console.log(blog, selectedDate);
-          fetcher(
+          const result = await fetcher(
             '/api/usecases',
             addBlogPostAction(selectedDate, blog, session.username)
           );
           setSelectedDate('');
           setBlog('');
+          if (result.ok) {
+            router.push('/blogs');
+          }
         }}
         className='flex flex-col w-1/2'
       >
         <input
           type='date'
+          className='m-2'
           value={selectedDate}
           onChange={(e) => setSelectedDate(e.target.value)}
         />
         <input
           value={blog}
-          className='border-gray-200 border-2 p-2'
+          className='border-gray-200 border-2 p-2 m-2'
           onChange={(e) => setBlog(e.target.value)}
         />
-        <button className=' text-gray-600 bg-green-300 border-2 border-green-300 p-2 mt-2'>
+        <button className=' text-gray-600 bg-green-300 border-2 border-green-300 p-2 m-2'>
           {' '}
           Add Blog{' '}
         </button>
       </form>
-      <ul>
+      <ul className='m-2'>
         {blogPosts.map((post) => (
-          <div key={post.id}>
+          <div className='mb-2' key={post.id}>
             <div>{post.date}</div>
             <div>{post.blog}</div>
           </div>
